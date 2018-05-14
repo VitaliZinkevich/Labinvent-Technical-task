@@ -2,12 +2,12 @@
 #form1 {
   display: flex;
   flex-flow: row, wrap;
-  justify-content: space-between;
-  border: 1px solid grey
+  justify-content: space-around;
+
 }
 
 .form-group {
-  border-right: 1px solid grey
+  border: 1px solid grey
 }
 
 .req{
