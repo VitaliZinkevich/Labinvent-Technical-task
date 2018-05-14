@@ -3,34 +3,33 @@
 
     <div class="col-12">
 
-
-
       <form [formGroup]="networkForm" id="form1" >
-        <div class="form-group col-6" >
+
+        <div class="form-group col-6">
         <h3>Ethernet Settings</h3>
 
         <div formGroupName="ethernetSettings" >
         <div class="">
           <input type="radio" formControlName="obtainIPAuto"  value='true' >
-          <span>Use auto IP</span>
+          <span>Obtain an IP address automatically (DHCP/BootP)</span>
         </div>
 
         <div class="">
           <input type="radio" formControlName="obtainIPAuto"  value='false' >
-          <span>Use manual IP</span>
+          <span>Use the following IP address</span>
         </div>
 
 
-        <div class="" formGroupName="manualIpSettings">
+        <div class="groupEnd" formGroupName="manualIpSettings">
           <div class="">
-            <span>IP*</span>  <input type="text" formControlName="ip">
+            <span >IP address: <span class="text-danger req">*</span> </span>  <input type="text" formControlName="ip">
           </div>
           <div class="">
-            <span>Subnet Mask*</span>  <input  formControlName="mask" type="text" name="" >
+            <span>Subnet Mask: <span class="text-danger req">*</span></span>  <input  formControlName="mask" type="text" name="" >
           </div>
 
           <div class="">
-            <span>Gateway</span>  <input  formControlName="gateway" type="text" name="gateway" value="">
+            <span>Default Gateway: </span>  <input  formControlName="gateway" type="text" name="gateway" value="">
           </div>
 
 
@@ -45,20 +44,95 @@
 
 
 
-            <div class="" formGroupName="manualDnsSettings">
+            <div class="groupEnd" formGroupName="manualDnsSettings">
               <div class="">
-                  <span>Preferred DNS server*</span>  <input type="text" formControlName="preferedDns" name="preferedDns" >
+                  <span>Preferred DNS server: <span class="text-danger req">*</span></span>  <input type="text" formControlName="preferedDns" name="preferedDns" >
               </div>
               <div class="">
-                  <span>Alternative DNS server</span>  <input  formControlName="alternativeDns" type="text" name="alternativeDns" >
+                  <span>Alternative DNS server: </span>  <input  formControlName="alternativeDns" type="text" name="alternativeDns" >
               </div>
 
 
             </div>
         </div>
       </div>
-      <div class="form-group col-6">
+
+      <div class="form-group col-6" formGroupName='wirelessSettings'>
           <h3>Wireless Settings</h3>
+
+          <div class="">
+            <input type="checkbox" formControlName='enableWiFi'> <span>Enable wifi: </span>
+          </div>
+
+<div class="" formGroupName='wifiOpt'>
+
+  <div class="rowEnd">
+
+      <span>Wireless Network Name: <span class="text-danger req">*</span></span>
+      <select formControlName='wifiName' class="" name="">
+      <option value="1">1</option>
+      </select>
+      <button id="wifirefresh"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px"
+      	 width="25px" height="25px" viewBox="3 -2 25 25" style="enable-background:new 3 -2 25 25;" xml:space="preserve">
+      <path d="M23.1,10.5c0,4.1-3.4,7.5-7.5,7.5s-7.5-3.4-7.5-7.5S11.5,3,15.6,3c1.9,0,3.6,0.7,5,1.9l-0.2-3.2l1-0.1l0.3,5l0,0l0,0l-5,0.3
+      	l-0.1-1L20,5.7C18.8,4.6,17.3,4,15.6,4C12,4,9.1,6.9,9.1,10.5S12,17,15.6,17s6.5-2.9,6.5-6.5H23.1z"/>
+      </svg></button>
+
+  </div>
+
+<div class="">
+<input type="checkbox" formControlName='wifiSecurity'> <span>Enable wireless security: </span>
+<div class="rowEnd">
+<span>Security Key: <span class="text-danger req">*</span></span>  <input type="text" formControlName='wifiSecurityKey' placeholder="Security key">
+</div>
+</div>
+
+<div class="">
+  <input type="radio" name="" formControlName='wifiIpAuto' value="true"> <span>Obtain an IP address atomatically</span>
+</div>
+<div class="">
+  <input type="radio" name="" formControlName='wifiIpAuto' value="false"> <span>Use the following IP address</span>
+</div>
+
+<div class="groupEnd" formGroupName='wifiIpManual'>
+  <div class="">
+      <span>IP address: <span class="text-danger req">*</span></span>  <input formControlName='ipWiFi' type="text"  >
+  </div>
+  <div class="">
+      <span>Subnet Mask: <span class="text-danger req">*</span></span>  <input   formControlName='subnetMaskWifi' type="text"  >
+  </div>
+  <div class="">
+      <span>Default Gateway</span>  <input    formControlName='defGateway' type="text"  >
+  </div>
+</div>
+
+
+<div class="">
+  <input type="radio"  formControlName='wifiDNSServerAuto' value="true"> <span>Obtain DNS server atomatically</span>
+</div>
+<div class="">
+  <input type="radio"  formControlName='wifiDNSServerAuto' value="false"> <span>Use the following DS server</span>
+</div>
+
+<div class="groupEnd" formGroupName='wifiDNSServerManual'>
+  <div class="">
+      <span>Preferred DNS server <span class="text-danger req">*</span></span>  <input formControlName='prefWifiDns' type="text"  >
+  </div>
+  <div class="">
+      <span>Alternative DNS server</span>  <input  formControlName='altWifiDns' type="text"  >
+  </div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
       </div>
 
 
@@ -69,8 +143,11 @@
 
 
       </form>
-      <button type="button" name="button" class="btn btn-primary">Save</button>
-      <button type="button" name="button" class="btn btn-danger">Cancel</button>
+      <div class="formend">
+        <button type="button" name="button" class="btn btn-primary">Save</button>
+        <button type="button" name="button" class="btn btn-danger">Cancel</button>
+      </div>
+
       </div>
 
   </div>
