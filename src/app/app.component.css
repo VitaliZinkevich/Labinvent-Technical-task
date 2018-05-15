@@ -7,7 +7,7 @@
 }
 
 .form-group {
-  border: 1px solid grey
+  /*border: 1px solid grey*/
 }
 
 .req{
@@ -33,9 +33,9 @@ input, select, button{
 }
 
 .formend {
-  border-width: 0px 1px 1px 1px;
+  /*border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: grey
+  border-color: grey*/
 }
 
 #wifirefresh{

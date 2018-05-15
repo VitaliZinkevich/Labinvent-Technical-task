@@ -1,18 +1,21 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 
+import { ServerService } from './server.service'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements  AfterViewInit {
+export class AppComponent implements  OnInit {
 networkForm: FormGroup
+wifiList:any
+message:any
+color: string
 
-
-
-constructor (private  fb: FormBuilder){
+constructor (private  fb: FormBuilder,
+              private server: ServerService){
 
   this.networkForm = fb.group ({
     ethernetSettings: fb.group({
@@ -62,9 +65,19 @@ constructor (private  fb: FormBuilder){
 
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
+    // get wifi list when load
+   this.getWiFi()
+    // set latest saved config
+   this.server.getLastConfig().subscribe ((data)=>{
+
+   console.log (data)
+   this.networkForm.patchValue (data[0])
+ })
+
 
   }
+
 // listen for form changes
   onChanges(): void {
   this.networkForm.get('ethernetSettings').get('obtainIPAuto').valueChanges.subscribe(val => {
@@ -93,6 +106,16 @@ constructor (private  fb: FormBuilder){
 
 
 }
+
+// get wifi list from ServerService
+getWiFi(){
+
+  this.server.getWiFiList().subscribe ((data)=>{
+      this.wifiList= data
+})
+
+}
+
 
 // form disable and enable
 ethernetFormDisabler (){
@@ -183,10 +206,30 @@ wifiSecurity(){
     }
 
   }
-
-
-
-
 }
 // end form disable and enable
+
+// saving data to server
+
+saveOptions (){
+
+if (this.networkForm.valid === true) {
+  let config = this.networkForm.value
+  this.server.saveOpt(config).subscribe (()=> {
+    this.message = 'Saved'
+    this.color = 'alert alert-success'
+  })
+
+} else {
+
+  this.message = 'Fields with * are mandatory. Deactevate or fulfill them'
+  this.color = 'alert alert-danger'
+}
+
+}
+
+resetForm(){
+this.networkForm.reset()
+
+}
 }
